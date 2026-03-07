@@ -117,7 +117,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
     >
       {isDefault && (
         <>
-          <div className="flex flex-col w-full gap-2">
+          <div className={cn("flex flex-col w-full gap-2", !isMd && "items-center")}>
             <div
               className={cn("flex gap-3", isMd ? "items-center flex-1" : "items-start")}
               data-name="weather-current"
