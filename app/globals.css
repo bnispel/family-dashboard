@@ -1,26 +1,38 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes rotate-sun {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.sun-icon-rotating {
+  animation: rotate-sun 20s linear infinite;
+}
+
+:root {
+  --general-border: #e5e5e5;
+  --general-foreground: #0a0a0a;
+  --general-muted-foreground: #737373;
+  --brand-neutrals-400: #a3a3a3;
+  --card-card: white;
+  --xs: 8px;
+  --sm: 12px;
+  --2xs: 4px;
+  --rounded-lg: 8px;
+  --bb-blue: #00a8e5;
+  --bb-navy: #014e6d;
+  --bb-green: #8cd43f;
+  --bb-blue-tint: #def3fb;
+  --bb-green-tint: #ebfcd9;
+}
+
+@layer base {
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+  }
 }
