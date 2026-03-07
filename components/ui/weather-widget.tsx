@@ -63,8 +63,10 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
   const isError = state === "error"
   const isMd = size === "md"
 
-  const isSunny = weatherData?.current.weatherCode === 0
-  const currentWeatherIcon = weatherData ? getWeatherIcon(weatherData.current.weatherCode) : weatherSunny
+  const isSunny = weatherData?.current.weatherCode === 0 && alert?.type !== "warning"
+  const currentWeatherIcon = alert?.type === "warning"
+    ? "/weather/weather-tornado.svg"
+    : weatherData ? getWeatherIcon(weatherData.current.weatherCode) : weatherSunny
 
   useEffect(() => {
     if (!isLoading) return
