@@ -44,6 +44,24 @@
 .rain-drop-2 { animation-delay: -0.37s; }
 .rain-drop-3 { animation-delay: -0.74s; }
 
+@keyframes loading-color-pulse {
+  0%, 100% { fill: #D1D5DB; }
+  50%       { fill: #93C5FD; }
+}
+
+.loading-icon path {
+  animation: loading-color-pulse 2s ease-in-out infinite;
+}
+
+@keyframes loading-dot-fade {
+  0%, 60%, 100% { opacity: 0.15; }
+  30%           { opacity: 1; }
+}
+
+.loading-dot { animation: loading-dot-fade 1.5s ease-in-out infinite; }
+.loading-dot-2 { animation-delay: 0.3s; }
+.loading-dot-3 { animation-delay: 0.6s; }
+
 @keyframes tornado-sway {
   0%   { transform: translateX(0px); }
   30%  { transform: translateX(var(--tx)); }

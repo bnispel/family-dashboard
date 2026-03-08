@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 import {
   SunnyIcon, LoadingIcon, ErrorIcon, TornadoIcon, WindIcon,
@@ -34,7 +33,6 @@ type WeatherWidgetProps = {
 }
 
 export function WeatherWidget({ className, size = "sm", state = "default", style, weatherData, alert }: WeatherWidgetProps) {
-  const [dotCount, setDotCount] = useState(1)
   const isLoading = state === "loading"
   const isDefault = state === "default"
   const isError = state === "error"
@@ -49,15 +47,6 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
     ? getWeatherIconComponent(weatherData.daily.weatherCode)
     : SunnyIcon
 
-  useEffect(() => {
-    if (!isLoading) return
-
-    const interval = setInterval(() => {
-      setDotCount((prev) => (prev === 3 ? 1 : prev + 1))
-    }, 400)
-
-    return () => clearInterval(interval)
-  }, [isLoading])
 
   const alertColorClasses: Record<string, string> = {
     wind: "bg-blue-50 text-blue-700",
@@ -167,7 +156,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
             <LoadingIcon />
           </div>
           <div className={secondaryTextClass} data-node-id="14:54">
-            Loading weather{".".repeat(dotCount)}
+            Loading weather<span className="loading-dot">.</span><span className="loading-dot loading-dot-2">.</span><span className="loading-dot loading-dot-3">.</span>
           </div>
         </div>
       )}
