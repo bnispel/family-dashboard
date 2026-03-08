@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 import {
-  SunnyIcon, TomorrowIcon, LoadingIcon, ErrorIcon, TornadoIcon, WindIcon,
+  SunnyIcon, LoadingIcon, ErrorIcon, TornadoIcon, WindIcon,
   getWeatherIconComponent,
 } from "./weather-icons"
 
@@ -45,6 +45,9 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
     alert?.type === "tornado" ? TornadoIcon :
     alert?.type === "wind" ? WindIcon :
     weatherData ? getWeatherIconComponent(weatherData.current.weatherCode) : SunnyIcon
+  const TomorrowWeatherIcon = weatherData
+    ? getWeatherIconComponent(weatherData.daily.weatherCode)
+    : SunnyIcon
 
   useEffect(() => {
     if (!isLoading) return
@@ -150,7 +153,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
               data-name="icon-tomorrow"
               data-node-id="13:79"
             >
-              <TomorrowIcon />
+              <TomorrowWeatherIcon />
             </div>
             <div className={secondaryTextClass} data-node-id="13:78">
               ↑{weatherData?.daily.tomorrowHigh}° ↓{weatherData?.daily.tomorrowLow}°

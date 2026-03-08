@@ -89,22 +89,22 @@ function computeAlert(data: WeatherData) {
 }
 
 type MockWeather = { current: { temp: number; weatherCode: number; windSpeed: number }; hourly: { weatherCodes: number[]; windSpeeds: number[] }; daily: { high: number; low: number; tomorrowHigh: number; tomorrowLow: number; weatherCode: number } }
-const mock = (temp: number, code: number, high: number, low: number, tHigh: number, tLow: number): MockWeather => ({
+const mock = (temp: number, code: number, high: number, low: number, tHigh: number, tLow: number, tCode?: number): MockWeather => ({
   current: { temp, weatherCode: code, windSpeed: 10 },
   hourly: { weatherCodes: Array(24).fill(code), windSpeeds: Array(24).fill(10) },
-  daily: { high, low, tomorrowHigh: tHigh, tomorrowLow: tLow, weatherCode: code },
+  daily: { high, low, tomorrowHigh: tHigh, tomorrowLow: tLow, weatherCode: tCode ?? code },
 })
 
 const TEST_SCENARIOS: Record<string, { state?: string; alert: { type: string; text: string } | null; weatherData?: MockWeather }> = {
   live: { alert: null },
-  "storm-afternoon": { alert: { type: "storm", text: "Storms likely around 3pm" }, weatherData: mock(74, 0, 80, 61, 68, 55) },
-  "tornado-warning": { alert: { type: "tornado", text: "⚠️ Tornado Warning until 6:45pm" }, weatherData: mock(68, 95, 72, 58, 65, 52) },
-  "raining": { alert: null, weatherData: mock(58, 61, 63, 52, 60, 49) },
-  "rain-later": { alert: { type: "rain", text: "Rain likely around 2pm" }, weatherData: mock(63, 2, 70, 54, 61, 50) },
-  "high-winds": { alert: { type: "wind", text: "High winds today" }, weatherData: mock(57, 1, 64, 46, 60, 44) },
-  "heat-advisory": { alert: { type: "heat", text: "Heat advisory until 8pm" }, weatherData: mock(101, 0, 106, 88, 99, 84) },
-  "storm-watch": { alert: { type: "watch", text: "Thunderstorm watch active" }, weatherData: mock(71, 3, 77, 62, 73, 60) },
-  "storm-warning": { alert: { type: "warning", text: "Thunderstorm warning active" }, weatherData: mock(66, 95, 74, 59, 68, 54) },
+  "storm-afternoon": { alert: { type: "storm", text: "Storms likely around 3pm" }, weatherData: mock(74, 0, 80, 61, 68, 55, 0) },
+  "tornado-warning": { alert: { type: "tornado", text: "⚠️ Tornado Warning until 6:45pm" }, weatherData: mock(68, 95, 72, 58, 65, 52, 2) },
+  "raining": { alert: null, weatherData: mock(58, 61, 63, 52, 60, 49, 0) },
+  "rain-later": { alert: { type: "rain", text: "Rain likely around 2pm" }, weatherData: mock(63, 2, 70, 54, 61, 50, 61) },
+  "high-winds": { alert: { type: "wind", text: "High winds today" }, weatherData: mock(57, 1, 64, 46, 60, 44, 0) },
+  "heat-advisory": { alert: { type: "heat", text: "Heat advisory until 8pm" }, weatherData: mock(101, 0, 106, 88, 99, 84, 1) },
+  "storm-watch": { alert: { type: "watch", text: "Thunderstorm watch active" }, weatherData: mock(71, 3, 77, 62, 73, 60, 95) },
+  "storm-warning": { alert: { type: "warning", text: "Thunderstorm warning active" }, weatherData: mock(66, 95, 74, 59, 68, 54, 3) },
   loading: { state: "loading", alert: null },
   error: { state: "error", alert: null },
 }
