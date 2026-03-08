@@ -110,8 +110,8 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
       className={cn(
         "bg-white border border-neutral-200 rounded-lg p-3 flex items-center justify-center shadow-sm",
         isMd ? "flex-row w-[452px]" : "flex-col w-[296px]",
-        isError ? "gap-1" : isLoading || !isMd ? "gap-2" : "gap-3",
-        (isLoading || isError) && "min-h-[130px]",
+        isDefault ? (isMd ? "gap-3" : "gap-2") : "gap-2",
+        !isMd && (isLoading || isError) && "min-h-[130px]",
         className
       )}
       style={style}
@@ -184,19 +184,19 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
         </>
       )}
       {isLoading && (
-        <>
-          <div className={cn("overflow-hidden relative", iconSizeClass)} data-name="icon-loading" data-node-id="14:48">
-            <img alt="loading" src={imgVector2} className="w-full h-full" />
+        <div className={cn("flex flex-col items-center gap-0.5", isMd && "flex-1 justify-center")}>
+          <div className={cn("overflow-hidden relative shrink-0", iconSizeClass)} data-name="icon-loading" data-node-id="14:48">
+            <img alt="loading" src={imgVector2} className="w-full h-full object-contain" />
           </div>
           <div className={secondaryTextClass} data-node-id="14:54">
             Loading weather{".".repeat(dotCount)}
           </div>
-        </>
+        </div>
       )}
       {isError && (
-        <>
-          <div className={cn("overflow-hidden relative", iconSizeClass)}>
-            <img alt="error" src={imgError} className="w-full h-full" />
+        <div className={cn("flex flex-col items-center gap-0.5", isMd && "flex-1 justify-center")}>
+          <div className={cn("overflow-hidden relative shrink-0", iconSizeClass)}>
+            <img alt="error" src={imgError} className="w-full h-full object-contain" />
           </div>
           <div
             className={cn("text-red-500 text-center whitespace-nowrap", isMd ? "text-base leading-6" : "text-xs leading-4")}
@@ -204,7 +204,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
           >
             Weather Unavailable
           </div>
-        </>
+        </div>
       )}
     </div>
   )
