@@ -47,7 +47,6 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
     ? getWeatherIconComponent(weatherData.daily.weatherCode)
     : SunnyIcon
 
-
   const alertColorClasses: Record<string, string> = {
     wind: "bg-blue-50 text-blue-700",
     heat: "bg-orange-200 text-orange-800",
@@ -86,35 +85,19 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
         className
       )}
       style={style}
-      data-node-id={isLoading ? "14:46" : "14:12"}
     >
       {isDefault && (
         <>
           <div className={cn("flex flex-col w-full gap-2", !isMd && "items-center")}>
-            <div
-              className={cn("flex gap-3", isMd ? "items-center flex-1" : "items-start")}
-              data-name="weather-current"
-              data-node-id="13:10"
-            >
-              <div
-                className={cn("overflow-hidden relative flex-shrink-0", iconSizeClass)}
-                data-name="icon-current"
-                data-node-id="11:1385"
-              >
+            <div className={cn("flex gap-3", isMd ? "items-center flex-1" : "items-start")}>
+              <div className={cn("overflow-hidden relative flex-shrink-0", iconSizeClass)}>
                 <CurrentWeatherIcon className={cn(isSunny && "sun-icon-rotating")} />
               </div>
-              <div
-                className={cn("flex", isMd ? "flex-row items-center gap-3" : "flex-col items-start")}
-                data-name="temp-stats"
-                data-node-id="12:65"
-              >
-                <div className="text-5xl font-semibold text-neutral-950 leading-[48px]" data-node-id="11:1392">
+              <div className={cn("flex", isMd ? "flex-row items-center gap-3" : "flex-col items-start")}>
+                <div className="text-5xl font-semibold text-neutral-950 leading-[48px]">
                   {weatherData?.current.temp}°
                 </div>
-                <div
-                  className={cn("text-neutral-500", isMd ? "text-lg leading-[27px]" : "text-sm leading-5")}
-                  data-node-id="11:1433"
-                >
+                <div className={cn("text-neutral-500", isMd ? "text-lg leading-[27px]" : "text-sm leading-5")}>
                   <span className="text-neutral-400">↑</span>
                   {weatherData?.daily.high}° <span className="text-neutral-400">↓</span>
                   {weatherData?.daily.low}°
@@ -128,23 +111,14 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
               "flex gap-1 items-center justify-center",
               isMd ? "flex-col border-l border-neutral-200 px-5" : "flex-row border-t border-neutral-200 pt-2 w-full"
             )}
-            data-name="weather-tomorrow"
-            data-node-id="12:73"
           >
-            <div
-              className={cn("text-neutral-400 text-center whitespace-nowrap", isMd ? "text-sm leading-5" : "text-xs leading-4")}
-              data-node-id="12:77"
-            >
+            <div className={cn("text-neutral-400 text-center whitespace-nowrap", isMd ? "text-sm leading-5" : "text-xs leading-4")}>
               Tomorrow
             </div>
-            <div
-              className={cn("overflow-hidden relative", isMd ? "w-5 h-[22px]" : "w-[14px] h-[15px]")}
-              data-name="icon-tomorrow"
-              data-node-id="13:79"
-            >
+            <div className={cn("overflow-hidden relative", isMd ? "w-5 h-[22px]" : "w-[14px] h-[15px]")}>
               <TomorrowWeatherIcon />
             </div>
-            <div className={secondaryTextClass} data-node-id="13:78">
+            <div className={secondaryTextClass}>
               ↑{weatherData?.daily.tomorrowHigh}° ↓{weatherData?.daily.tomorrowLow}°
             </div>
           </div>
@@ -152,10 +126,10 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
       )}
       {isLoading && (
         <div className={cn("flex flex-col items-center gap-0.5", isMd && "flex-1 justify-center")}>
-          <div className={cn("overflow-hidden relative shrink-0", iconSizeClass)} data-name="icon-loading" data-node-id="14:48">
+          <div className={cn("overflow-hidden relative shrink-0", iconSizeClass)}>
             <LoadingIcon />
           </div>
-          <div className={secondaryTextClass} data-node-id="14:54">
+          <div className={secondaryTextClass}>
             Loading weather<span className="loading-dot">.</span><span className="loading-dot loading-dot-2">.</span><span className="loading-dot loading-dot-3">.</span>
           </div>
         </div>
@@ -165,10 +139,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
           <div className={cn("overflow-hidden relative shrink-0", iconSizeClass)}>
             <ErrorIcon />
           </div>
-          <div
-            className={cn("text-red-500 text-center whitespace-nowrap", isMd ? "text-base leading-6" : "text-xs leading-4")}
-            data-node-id="14:error"
-          >
+          <div className={cn("text-red-500 text-center whitespace-nowrap", isMd ? "text-base leading-6" : "text-xs leading-4")}>
             Weather Unavailable
           </div>
         </div>

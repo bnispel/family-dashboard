@@ -78,20 +78,3 @@
 .tornado-line-4 { --tx: 4px;  animation-delay: -0.55s; }
 .tornado-line-5 { --tx: 3px; animation-delay: -0.8s; }
 
-:root {
-  --general-border: #e5e5e5;
-  --general-foreground: #0a0a0a;
-  --general-muted-foreground: #737373;
-  --brand-neutrals-400: #a3a3a3;
-  --card-card: white;
-  --xs: 8px;
-  --sm: 12px;
-  --2xs: 4px;
-  --rounded-lg: 8px;
-  --bb-blue: #00a8e5;
-  --bb-navy: #014e6d;
-  --bb-green: #8cd43f;
-  --bb-blue-tint: #def3fb;
-  --bb-green-tint: #ebfcd9;
-}
-
