@@ -105,6 +105,7 @@ const TEST_SCENARIOS: Record<string, { state?: string; alert: { type: string; te
   "heat-advisory": { alert: { type: "heat", text: "Heat advisory until 8pm" }, weatherData: mock(101, 0, 106, 88, 99, 84, 1) },
   "storm-watch": { alert: { type: "watch", text: "Thunderstorm watch active" }, weatherData: mock(71, 3, 77, 62, 73, 60, 95) },
   "storm-warning": { alert: { type: "warning", text: "Thunderstorm warning active" }, weatherData: mock(66, 95, 74, 59, 68, 54, 3) },
+  "snowing": { alert: null, weatherData: mock(28, 71, 31, 22, 35, 25, 73) },
   loading: { state: "loading", alert: null },
   error: { state: "error", alert: null },
 }
@@ -172,6 +173,7 @@ export default function Page() {
         <option value="heat-advisory">Heat advisory</option>
         <option value="storm-watch">Storm watch</option>
         <option value="storm-warning">Thunderstorm warning</option>
+        <option value="snowing">Snowing now</option>
         <option value="loading">Loading</option>
         <option value="error">Error</option>
       </select>

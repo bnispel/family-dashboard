@@ -13,6 +13,10 @@
   animation: rotate-sun 20s linear infinite;
 }
 
+.snow-icon-rotating {
+  animation: rotate-sun 12s linear infinite;
+}
+
 @keyframes lightning-flash {
   0%,  19%   { fill: #3B82F6; }
   20%        { fill: #ffffff; }
@@ -50,11 +54,11 @@
 .tornado-line {
   animation: tornado-sway 1.4s ease-in-out infinite;
 }
-.tornado-line-1 { --tx: 2px;  animation-delay: 0s; }
-.tornado-line-2 { --tx: 5px;  animation-delay: -0.2s; }
-.tornado-line-3 { --tx: 8px;  animation-delay: -0.45s; }
-.tornado-line-4 { --tx: 11px; animation-delay: -0.7s; }
-.tornado-line-5 { --tx: 14px; animation-delay: -1s; }
+
+.tornado-line-2 { --tx: 3px;  animation-delay: -0.2s; }
+.tornado-line-3 { --tx: 4px;  animation-delay: -0.45s; }
+.tornado-line-4 { --tx: 4px;  animation-delay: -0.55s; }
+.tornado-line-5 { --tx: 3px; animation-delay: -0.8s; }
 
 :root {
   --general-border: #e5e5e5;
