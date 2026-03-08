@@ -57,8 +57,3 @@
   --bb-green-tint: #ebfcd9;
 }
 
-@layer base {
-  body {
-    font-family: system-ui, -apple-system, sans-serif;
-  }
-}
