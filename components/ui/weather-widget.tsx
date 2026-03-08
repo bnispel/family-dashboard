@@ -2,33 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
-
-// Tomorrow icon
-const imgVector1 = "/weather/tomorrow.svg"
-// Loading icon (gear)
-const imgVector2 = "/weather/loading.svg"
-// Error icon (cloud alert)
-const imgError = "/weather/error.svg"
-
-// Weather icon set
-const weatherSunny = "/weather/weather-sunny.svg"
-const weatherRain = "/weather/weather-rain.svg"
-const weatherPartlyCloudy = "/weather/weather-partly-cloudy.svg"
-const weatherCloudy = "/weather/weather-cloudy.svg"
-const weatherStormy = "/weather/weather-stormy.svg"
-const weatherSnow = "/weather/weather-snow.svg"
-
-// Map WMO weather codes to icons
-function getWeatherIcon(weatherCode: number): string {
-  if (weatherCode === 0) return weatherSunny // Clear sky
-  if (weatherCode === 1 || weatherCode === 2) return weatherPartlyCloudy // Mainly clear, partly cloudy
-  if (weatherCode === 3) return weatherCloudy // Overcast
-  if (weatherCode === 45 || weatherCode === 48) return weatherCloudy // Foggy
-  if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(weatherCode)) return weatherRain // Drizzle and rain
-  if ([71, 73, 75, 77, 85, 86].includes(weatherCode)) return weatherSnow // Snow
-  if ([95, 96, 99].includes(weatherCode)) return weatherStormy // Thunderstorm
-  return weatherSunny // Default to sunny
-}
+import {
+  SunnyIcon, TomorrowIcon, LoadingIcon, ErrorIcon, TornadoIcon, WindIcon,
+  getWeatherIconComponent,
+} from "./weather-icons"
 
 type WeatherWidgetProps = {
   className?: string
@@ -63,10 +40,11 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
   const isError = state === "error"
   const isMd = size === "md"
 
-  const isSunny = weatherData?.current.weatherCode === 0 && alert?.type !== "warning"
-  const currentWeatherIcon = alert?.type === "warning"
-    ? "/weather/weather-tornado.svg"
-    : weatherData ? getWeatherIcon(weatherData.current.weatherCode) : weatherSunny
+  const isSunny = weatherData?.current.weatherCode === 0 && alert?.type !== "tornado" && alert?.type !== "wind"
+  const CurrentWeatherIcon =
+    alert?.type === "tornado" ? TornadoIcon :
+    alert?.type === "wind" ? WindIcon :
+    weatherData ? getWeatherIconComponent(weatherData.current.weatherCode) : SunnyIcon
 
   useEffect(() => {
     if (!isLoading) return
@@ -85,6 +63,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
     storm: "bg-blue-100 text-blue-800",
     watch: "bg-gray-200 text-gray-600",
     warning: "bg-red-400 text-white",
+    tornado: "bg-red-400 text-white",
   }
 
   const renderAlert = () => {
@@ -130,11 +109,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
                 data-name="icon-current"
                 data-node-id="11:1385"
               >
-                <img
-                  alt="weather"
-                  src={currentWeatherIcon}
-                  className={cn("w-full h-full", isSunny && "sun-icon-rotating")}
-                />
+                <CurrentWeatherIcon className={cn(isSunny && "sun-icon-rotating")} />
               </div>
               <div
                 className={cn("flex", isMd ? "flex-row items-center gap-3" : "flex-col items-start")}
@@ -175,7 +150,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
               data-name="icon-tomorrow"
               data-node-id="13:79"
             >
-              <img alt="tomorrow" src={imgVector1} className="w-full h-full" />
+              <TomorrowIcon />
             </div>
             <div className={secondaryTextClass} data-node-id="13:78">
               ↑{weatherData?.daily.tomorrowHigh}° ↓{weatherData?.daily.tomorrowLow}°
@@ -186,7 +161,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
       {isLoading && (
         <div className={cn("flex flex-col items-center gap-0.5", isMd && "flex-1 justify-center")}>
           <div className={cn("overflow-hidden relative shrink-0", iconSizeClass)} data-name="icon-loading" data-node-id="14:48">
-            <img alt="loading" src={imgVector2} className="w-full h-full object-contain" />
+            <LoadingIcon />
           </div>
           <div className={secondaryTextClass} data-node-id="14:54">
             Loading weather{".".repeat(dotCount)}
@@ -196,7 +171,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
       {isError && (
         <div className={cn("flex flex-col items-center gap-0.5", isMd && "flex-1 justify-center")}>
           <div className={cn("overflow-hidden relative shrink-0", iconSizeClass)}>
-            <img alt="error" src={imgError} className="w-full h-full object-contain" />
+            <ErrorIcon />
           </div>
           <div
             className={cn("text-red-500 text-center whitespace-nowrap", isMd ? "text-base leading-6" : "text-xs leading-4")}
