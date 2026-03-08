@@ -40,6 +40,22 @@
 .rain-drop-2 { animation-delay: -0.37s; }
 .rain-drop-3 { animation-delay: -0.74s; }
 
+@keyframes tornado-sway {
+  0%   { transform: translateX(0px); }
+  30%  { transform: translateX(var(--tx)); }
+  70%  { transform: translateX(calc(var(--tx) * -1)); }
+  100% { transform: translateX(0px); }
+}
+
+.tornado-line {
+  animation: tornado-sway 1.4s ease-in-out infinite;
+}
+.tornado-line-1 { --tx: 2px;  animation-delay: 0s; }
+.tornado-line-2 { --tx: 5px;  animation-delay: -0.2s; }
+.tornado-line-3 { --tx: 8px;  animation-delay: -0.45s; }
+.tornado-line-4 { --tx: 11px; animation-delay: -0.7s; }
+.tornado-line-5 { --tx: 14px; animation-delay: -1s; }
+
 :root {
   --general-border: #e5e5e5;
   --general-foreground: #0a0a0a;
