@@ -152,7 +152,7 @@ export default function Page() {
   const widgetWeatherData = scenario === "live" ? weatherData : (override.weatherData ?? null)
 
   return (
-    <div style={{ background: "white", width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "24px" }} data-name="Dashboard" data-node-id="15:109">
+    <div style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "24px" }} data-name="Dashboard" data-node-id="15:109">
       <WeatherWidget
         size={widgetSize}
         state={widgetState as "default" | "loading" | "error"}
@@ -162,7 +162,7 @@ export default function Page() {
       <select
         value={scenario}
         onChange={(e) => setScenario(e.target.value)}
-        className="text-xs text-neutral-500 border border-neutral-200 rounded px-2 py-1 bg-white"
+        className="text-xs text-foreground-muted border border-border rounded px-2 py-1 bg-card"
       >
         <option value="live">Live</option>
         <option value="storm-afternoon">Storm this afternoon</option>

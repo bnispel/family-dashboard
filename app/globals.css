@@ -1,5 +1,79 @@
 @import "tailwindcss";
 
+@theme {
+  /* ── Semantic theme colors ─────────────────────────────── */
+  --color-background: #FDFCF8;
+  --color-card: #FFFDF7;
+  --color-muted: #F5F2EC;
+  --color-foreground: #1F1A16;
+  --color-foreground-muted: #7A6E65;
+  --color-border: #E8E0D5;
+  --color-input: #E8E0D5;
+  --color-accent: #F5F0E8;
+  --color-accent-foreground: #1F1A16;
+
+  /* ── Warm gray palette ─────────────────────────────────── */
+  --color-warm-gray-50: #FAFAF7;
+  --color-warm-gray-100: #F5F4EE;
+  --color-warm-gray-200: #E8E5DC;
+  --color-warm-gray-300: #D4D0C4;
+  --color-warm-gray-400: #B0AB9B;
+  --color-warm-gray-500: #8C8677;
+  --color-warm-gray-600: #6B6558;
+  --color-warm-gray-700: #4A4540;
+  --color-warm-gray-800: #2E2A26;
+  --color-warm-gray-900: #1C1916;
+  --color-warm-gray-950: #100E0C;
+
+  /* ── Member colors ─────────────────────────────────────── */
+  --color-member-emery-100: #FCE7F3;
+  --color-member-emery-500: #EC4899;
+  --color-member-emery-700: #BE185D;
+  --color-member-emery-900: #831843;
+
+  --color-member-lincoln-100: #D1FAE5;
+  --color-member-lincoln-500: #10B981;
+  --color-member-lincoln-700: #047857;
+  --color-member-lincoln-900: #064E3B;
+
+  --color-member-mom-100: #F3E8FF;
+  --color-member-mom-500: #A855F7;
+  --color-member-mom-700: #7E22CE;
+  --color-member-mom-900: #581C87;
+
+  --color-member-dad-100: #DBEAFE;
+  --color-member-dad-500: #3B82F6;
+  --color-member-dad-700: #1D4ED8;
+  --color-member-dad-900: #1E3A8A;
+
+  /* ── Border radius ─────────────────────────────────────── */
+  --radius-sm: 12px;   /* chips, badges */
+  --radius-md: 16px;   /* standard cards */
+  --radius-lg: 24px;   /* large cards, weather widget */
+  --radius-xl: 32px;   /* hero / full-bleed */
+  --radius-full: 999px; /* pills, avatars */
+
+  /* ── Dashboard spacing ─────────────────────────────────── */
+  --spacing-card: 24px;
+  --spacing-card-lg: 32px;
+  --spacing-gap-sm: 12px;
+  --spacing-gap-md: 20px;
+  --spacing-gap-lg: 32px;
+
+  /* ── Font families ─────────────────────────────────────── */
+  --font-sans: Inter, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  /* ── Dashboard font sizes ──────────────────────────────── */
+  --text-display: 80px;    /* hero numbers — time, temp */
+  --text-heading-1: 56px;  /* widget titles */
+  --text-heading-2: 40px;  /* kid names, secondary headers */
+  --text-body-lg: 28px;    /* chore labels, primary text */
+  --text-body-base: 22px;  /* secondary info */
+  --text-body-sm: 18px;    /* dates, subtitles */
+  --text-label: 16px;      /* badges, chips — minimum size */
+}
+
 @keyframes rotate-sun {
   from {
     transform: rotate(0deg);

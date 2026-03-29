@@ -71,14 +71,14 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
 
   const iconSizeClass = isMd ? "w-[76px] h-[80px]" : "w-[65px] h-[68px]"
   const secondaryTextClass = cn(
-    "text-neutral-400 text-center whitespace-nowrap",
+    "text-warm-gray-400 text-center whitespace-nowrap",
     isMd ? "text-base leading-6" : "text-xs leading-4"
   )
 
   return (
     <div
       className={cn(
-        "bg-white border border-neutral-200 rounded-lg p-3 flex items-center justify-center shadow-sm",
+        "bg-card border border-border rounded-lg p-3 flex items-center justify-center shadow-sm",
         isMd ? "flex-row w-[452px]" : "flex-col w-[296px]",
         isDefault ? (isMd ? "gap-3" : "gap-2") : "gap-2",
         !isMd && (isLoading || isError) && "min-h-[130px]",
@@ -94,12 +94,12 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
                 <CurrentWeatherIcon className={cn(isSunny && "sun-icon-rotating")} />
               </div>
               <div className={cn("flex", isMd ? "flex-row items-center gap-3" : "flex-col items-start")}>
-                <div className="text-5xl font-semibold text-neutral-950 leading-[48px]">
+                <div className="text-5xl font-semibold text-foreground leading-[48px]">
                   {weatherData?.current.temp}°
                 </div>
-                <div className={cn("text-neutral-500", isMd ? "text-lg leading-[27px]" : "text-sm leading-5")}>
-                  <span className="text-neutral-400">↑</span>
-                  {weatherData?.daily.high}° <span className="text-neutral-400">↓</span>
+                <div className={cn("text-foreground-muted", isMd ? "text-lg leading-[27px]" : "text-sm leading-5")}>
+                  <span className="text-warm-gray-400">↑</span>
+                  {weatherData?.daily.high}° <span className="text-warm-gray-400">↓</span>
                   {weatherData?.daily.low}°
                 </div>
               </div>
@@ -109,10 +109,10 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
           <div
             className={cn(
               "flex gap-1 items-center justify-center",
-              isMd ? "flex-col border-l border-neutral-200 px-5" : "flex-row border-t border-neutral-200 pt-2 w-full"
+              isMd ? "flex-col border-l border-border px-5" : "flex-row border-t border-border pt-2 w-full"
             )}
           >
-            <div className={cn("text-neutral-400 text-center whitespace-nowrap", isMd ? "text-sm leading-5" : "text-xs leading-4")}>
+            <div className={cn("text-warm-gray-400 text-center whitespace-nowrap", isMd ? "text-sm leading-5" : "text-xs leading-4")}>
               Tomorrow
             </div>
             <div className={cn("overflow-hidden relative", isMd ? "w-5 h-[22px]" : "w-[14px] h-[15px]")}>
@@ -139,7 +139,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
           <div className={cn("overflow-hidden relative shrink-0", iconSizeClass)}>
             <ErrorIcon />
           </div>
-          <div className={cn("text-red-500 text-center whitespace-nowrap", isMd ? "text-base leading-6" : "text-xs leading-4")}>
+          <div className={cn("text-warm-gray-500 text-center whitespace-nowrap", isMd ? "text-base leading-6" : "text-xs leading-4")}>
             Weather Unavailable
           </div>
         </div>
