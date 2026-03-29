@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import WeatherWidget from "../components/ui/weather-widget"
+import ClockWidget from "../components/ui/clock-widget"
 
 type WeatherData = {
   current: {
@@ -153,6 +154,7 @@ export default function Page() {
 
   return (
     <div style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "24px" }} data-name="Dashboard" data-node-id="15:109">
+      <ClockWidget size={widgetSize} />
       <WeatherWidget
         size={widgetSize}
         state={widgetState as "default" | "loading" | "error"}

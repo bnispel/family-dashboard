@@ -71,8 +71,8 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
 
   const iconSizeClass = isMd ? "w-[76px] h-[80px]" : "w-[65px] h-[68px]"
   const secondaryTextClass = cn(
-    "text-warm-gray-400 text-center whitespace-nowrap",
-    isMd ? "text-base leading-6" : "text-xs leading-4"
+    "text-warm-gray-500 text-center whitespace-nowrap",
+    "text-body-sm leading-body-sm"
   )
 
   return (
@@ -94,12 +94,12 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
                 <CurrentWeatherIcon className={cn(isSunny && "sun-icon-rotating")} />
               </div>
               <div className={cn("flex", isMd ? "flex-row items-center gap-3" : "flex-col items-start")}>
-                <div className="text-5xl font-semibold text-foreground leading-[48px]">
+                <div className="text-[56px] font-medium text-foreground leading-heading-1 tracking-heading-1">
                   {weatherData?.current.temp}°
                 </div>
-                <div className={cn("text-foreground-muted", isMd ? "text-lg leading-[27px]" : "text-sm leading-5")}>
-                  <span className="text-warm-gray-400">↑</span>
-                  {weatherData?.daily.high}° <span className="text-warm-gray-400">↓</span>
+                <div className="text-warm-gray-600 text-[22px] leading-[29px]">
+                  <span className="text-foreground-muted">↑</span>
+                  {weatherData?.daily.high}° <span className="text-foreground-muted">↓</span>
                   {weatherData?.daily.low}°
                 </div>
               </div>
@@ -112,10 +112,10 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
               isMd ? "flex-col border-l border-border px-5" : "flex-row border-t border-border pt-2 w-full"
             )}
           >
-            <div className={cn("text-warm-gray-400 text-center whitespace-nowrap", isMd ? "text-sm leading-5" : "text-xs leading-4")}>
+            <div className={cn("text-foreground-muted text-center whitespace-nowrap", "text-body-sm leading-body-sm")}>
               Tomorrow
             </div>
-            <div className={cn("overflow-hidden relative", isMd ? "w-5 h-[22px]" : "w-[14px] h-[15px]")}>
+            <div className={cn("overflow-hidden relative", isMd ? "w-5 h-[22px]" : "w-[22px] h-[24px]")}>
               <TomorrowWeatherIcon />
             </div>
             <div className={secondaryTextClass}>

@@ -72,6 +72,16 @@
   --text-body-base: 22px;  /* secondary info */
   --text-body-sm: 18px;    /* dates, subtitles */
   --text-label: 16px;      /* badges, chips — minimum size */
+
+  /* ── Dashboard line heights ────────────────────────────── */
+  --leading-heading-1: 67px;  /* heading-1: 56px / 67px */
+  --leading-body-lg: 36px;    /* body-lg: 28px / 36px */
+  --leading-body-sm: 23px;    /* body-sm: 18px / 23px */
+  --leading-label: 20px;      /* label: 16px / 20px */
+
+  /* ── Dashboard letter spacing ──────────────────────────── */
+  --tracking-heading-1: -1px;  /* tight — heading-1 */
+  --tracking-label: 2px;       /* wide — label/badge text */
 }
 
 @keyframes rotate-sun {
