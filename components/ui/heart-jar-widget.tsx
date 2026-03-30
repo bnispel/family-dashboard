@@ -412,7 +412,7 @@ export default function HeartJarWidget() {
 
             {glowing && (
               <path
-                key={glowKey}
+                key={`glow-${glowKey}`}
                 d={HEART_PATH}
                 fill="none"
                 stroke={identity?.color ?? "#ff8fa3"}
@@ -454,7 +454,7 @@ export default function HeartJarWidget() {
             </g>
 
             <path
-              key={beatKey}
+              key={`beat-${beatKey}`}
               d={HEART_PATH}
               fill="none"
               stroke={identity?.color ?? "#f42f2f"}
