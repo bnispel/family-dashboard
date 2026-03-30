@@ -1,6 +1,6 @@
 "use client"
 
-import { use, useEffect, useState } from "react"
+import { use, useEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { ArrowLeft, Check } from "lucide-react"
@@ -148,6 +148,24 @@ export default function ChoreScreen({ params }: { params: Promise<{ kidId: strin
   const [completedIds, setCompletedIds] = useState<Set<string>>(new Set())
   const [totalPoints, setTotalPoints] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [showCelebration, setShowCelebration] = useState(false)
+  const prevUnlockedRef = useRef<boolean | null>(null)
+
+  const celebrationPieces = useMemo(() => {
+    const COUNT = 18
+    return Array.from({ length: COUNT }, (_, i) => {
+      const angle = (i / COUNT) * 360
+      const dist = 160 + (i % 4) * 85
+      const rad = (angle * Math.PI) / 180
+      const dx = Math.round(Math.cos(rad) * dist)
+      const dy = Math.round(Math.sin(rad) * dist)
+      const rot = (i % 2 === 0 ? 1 : -1) * (90 + i * 33)
+      const duration = 0.85 + (i % 4) * 0.1
+      const delay = i * 0.002
+      const size = 32 + (i % 4) * 20
+      return { dx, dy, rot, duration, delay, size, src: getPopcornVariant(kidId, i) }
+    })
+  }, [kidId])
 
   async function fetchData() {
     const weekStart = getWeekStart()
@@ -216,6 +234,16 @@ export default function ChoreScreen({ params }: { params: Promise<{ kidId: strin
     return () => { supabase.removeChannel(channel) }
   }, [kidId])
 
+  useEffect(() => {
+    if (loading || !kid) return
+    const currKernels = Math.floor(totalPoints / kid.points_per_kernel)
+    const isUnlocked = currKernels >= kid.kernel_target
+    if (prevUnlockedRef.current === false && isUnlocked) {
+      setShowCelebration(true)
+    }
+    prevUnlockedRef.current = isUnlocked
+  }, [totalPoints, kid, loading])
+
   async function toggleChore(chore: Chore) {
     const weekStart = getWeekStart()
     const dayStart = getDayStart()
@@ -264,8 +292,70 @@ export default function ChoreScreen({ params }: { params: Promise<{ kidId: strin
   const weeklyChores = chores.filter((c) => c.reset_cadence === "weekly")
   const dailyChores = chores.filter((c) => c.reset_cadence === "daily")
 
+  const celebrationCss = celebrationPieces
+    .map((p, i) =>
+      `@keyframes popcorn-fly-${i}{` +
+      `0%{transform:translate(-50%,-50%) scale(0) rotate(0deg);opacity:1;}` +
+      `65%{opacity:1;}` +
+      `100%{transform:translate(calc(-50% + ${p.dx}px),calc(-50% + ${p.dy}px)) scale(1.1) rotate(${p.rot}deg);opacity:0;}` +
+      `}`
+    )
+    .join("")
+
   return (
     <div className="min-h-screen bg-background">
+      {showCelebration && (
+        <>
+          <style dangerouslySetInnerHTML={{ __html: celebrationCss }} />
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-black/40" />
+            {/* Popcorn pieces */}
+            {celebrationPieces.map((p, i) => (
+              <div
+                key={i}
+                style={{
+                  position: "fixed",
+                  left: "50%",
+                  top: "50%",
+                  width: p.size,
+                  height: p.size,
+                  pointerEvents: "none",
+                  animation: `popcorn-fly-${i} ${p.duration}s ease-out ${p.delay}s both`,
+                }}
+              >
+                <Image src={p.src} alt="" fill className="object-contain" />
+              </div>
+            ))}
+            {/* Modal */}
+            <div className={cn(
+              "relative z-10 rounded-3xl p-8 flex flex-col items-center gap-4 shadow-2xl max-w-xs w-full mx-4 text-center border-2",
+              colors.checkboxBg,
+              colors.border700,
+            )}>
+              <div className="relative w-[225px] h-[120px]">
+                <Image
+                  src={kid.color === "#ec4899" ? "/icons/popcorn-emery.png" : "/icons/popcorn-lincoln.png"}
+                  alt="popcorn explosion"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-3xl font-normal text-white">Movie night</span>
+                <span className="text-3xl font-bold text-white">UNLOCKED</span>
+              </div>
+              <button
+                onClick={() => setShowCelebration(false)}
+                className="mt-2 px-8 py-3 rounded-full bg-white font-semibold text-body-base shadow"
+              >
+                <span className={colors.text500}>Keep going!</span>
+              </button>
+            </div>
+          </div>
+        </>
+      )}
       <div className="max-w-[1368px] mx-auto px-4 sm:px-8 py-5 sm:py-7 flex flex-col gap-6 sm:gap-8">
 
         {/* Top bar */}
@@ -321,7 +411,7 @@ export default function ChoreScreen({ params }: { params: Promise<{ kidId: strin
           </div>
 
           {/* Progress bar + label */}
-          <div className="flex flex-col gap-1.5 items-end w-full">
+          <div className="flex flex-col gap-1.5 items-center w-full">
             <div className="w-full h-2 rounded-full bg-border overflow-hidden shadow-[0px_1px_2px_0px_rgba(0,0,0,0.04),0px_2px_8px_0px_rgba(0,0,0,0.06)]">
               <div
                 className={cn("h-full rounded-full transition-all", colors.progressBar)}
