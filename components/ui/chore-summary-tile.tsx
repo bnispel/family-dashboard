@@ -195,7 +195,7 @@ export function ChoreSummaryTile() {
     // Sum points per kid
     const pointsByKid: Record<string, number> = {}
     for (const c of completions ?? []) {
-      const pts = (c.chores as { point_value: number } | null)?.point_value ?? 0
+      const pts = (c.chores as unknown as { point_value: number } | null)?.point_value ?? 0
       pointsByKid[c.kid_id] = (pointsByKid[c.kid_id] ?? 0) + pts
     }
 
