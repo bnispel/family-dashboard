@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react"
 import WeatherWidget from "../components/ui/weather-widget"
 import ClockWidget from "../components/ui/clock-widget"
+import { Card } from "../components/ui/card"
+import ChoreSummaryTile from "../components/ui/chore-summary-tile"
 
 type WeatherData = {
   current: {
@@ -154,31 +156,20 @@ export default function Page() {
 
   return (
     <div style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "24px" }} data-name="Dashboard" data-node-id="15:109">
-      <ClockWidget size={widgetSize} />
-      <WeatherWidget
-        size={widgetSize}
-        state={widgetState as "default" | "loading" | "error"}
-        weatherData={widgetState === "default" ? widgetWeatherData : null}
-        alert={widgetAlert}
-      />
-      <select
-        value={scenario}
-        onChange={(e) => setScenario(e.target.value)}
-        className="text-xs text-foreground-muted border border-border rounded px-2 py-1 bg-card"
-      >
-        <option value="live">Live</option>
-        <option value="storm-afternoon">Storm this afternoon</option>
-        <option value="tornado-warning">Tornado warning</option>
-        <option value="raining">Raining now</option>
-        <option value="rain-later">Rain later</option>
-        <option value="high-winds">High winds</option>
-        <option value="heat-advisory">Heat advisory</option>
-        <option value="storm-watch">Storm watch</option>
-        <option value="storm-warning">Thunderstorm warning</option>
-        <option value="snowing">Snowing now</option>
-        <option value="loading">Loading</option>
-        <option value="error">Error</option>
-      </select>
+      <Card className="p-0">
+        <ClockWidget size={widgetSize} />
+      </Card>
+      <Card className="p-0">
+        <WeatherWidget
+          size={widgetSize}
+          state={widgetState as "default" | "loading" | "error"}
+          weatherData={widgetState === "default" ? widgetWeatherData : null}
+          alert={widgetAlert}
+        />
+      </Card>
+      <Card className="p-0">
+        <ChoreSummaryTile />
+      </Card>
     </div>
   )
 }

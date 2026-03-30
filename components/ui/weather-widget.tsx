@@ -78,7 +78,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
   return (
     <div
       className={cn(
-        "bg-card border border-border rounded-lg p-3 flex items-center justify-center shadow-sm",
+        "p-3 flex items-center justify-center",
         isMd ? "flex-row w-[452px]" : "flex-col w-[296px]",
         isDefault ? (isMd ? "gap-3" : "gap-2") : "gap-2",
         !isMd && (isLoading || isError) && "min-h-[130px]",
