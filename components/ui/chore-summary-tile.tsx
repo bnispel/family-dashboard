@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Clock } from "lucide-react"
 import { supabase } from "@/lib/supabase"
-import { getWeekStart, getPopcornVariant } from "@/lib/chore-utils"
+import { getWeekStart, getPopcornVariant, getKernelState } from "@/lib/chore-utils"
 import { cn } from "@/lib/utils"
 
 // ---------------------------------------------------------------------------
@@ -24,6 +24,7 @@ type Kid = {
 type KidProgress = {
   kid: Kid
   kernels_earned: number
+  points_into_kernel: number
 }
 
 // ---------------------------------------------------------------------------
@@ -62,7 +63,7 @@ type KidBlockProps = {
 }
 
 function KidBlock({ progress }: KidBlockProps) {
-  const { kid, kernels_earned } = progress
+  const { kid, kernels_earned, points_into_kernel } = progress
   const isEmery = kid.name === "Emery"
   const isUnlocked = kernels_earned >= kid.kernel_target
 
@@ -146,15 +147,18 @@ function KidBlock({ progress }: KidBlockProps) {
             {Array.from({ length: 4 }).map((_, colIdx) => {
               const slotIdx = rowIdx * 4 + colIdx
               if (slotIdx >= kid.kernel_target) return <div key={colIdx} className="w-[32px] h-[34px]" />
-              const earned = slotIdx < kernels_earned
+              const state = getKernelState(slotIdx, kernels_earned, points_into_kernel, kid.points_per_kernel)
+              const src =
+                state === "popped" ? getPopcornVariant(kid.id, slotIdx)
+                : state === "cooked" ? "/icons/kernel-cooked.svg"
+                : "/icons/kernal.svg"
               return (
-                <div key={colIdx} className="relative w-[32px] h-[34px] shrink-0">
-                  <Image
-                    src={earned ? getPopcornVariant(kid.id, slotIdx) : "/icons/kernal.svg"}
-                    alt={earned ? "earned kernel" : "unearned kernel"}
-                    fill
-                    className="object-contain"
-                  />
+                <div
+                  key={colIdx}
+                  className="relative w-[32px] h-[34px] shrink-0"
+                  style={{ opacity: state === "empty" ? 0.4 : 1 }}
+                >
+                  <Image src={src} alt={state} fill className="object-contain" />
                 </div>
               )
             })}
@@ -205,6 +209,7 @@ export function ChoreSummaryTile() {
         return {
           kid,
           kernels_earned: Math.floor(points / kid.points_per_kernel),
+          points_into_kernel: points % kid.points_per_kernel,
         }
       }),
     )

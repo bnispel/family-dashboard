@@ -29,6 +29,36 @@ export function getDayStart(date: Date = new Date()): string {
   return toDateString(year, month, day)
 }
 
+// -------------------------------------------------------------------------
+// Kernel state
+// -------------------------------------------------------------------------
+
+export type KernelState = "empty" | "partial" | "cooked" | "popped"
+
+/**
+ * Returns the display state for a single kernel slot.
+ * - "empty"   → 0 pts into this kernel (40% opacity unpopped)
+ * - "partial" → 1 pt into this kernel  (100% opacity unpopped)
+ * - "cooked"  → 2 pts into this kernel (cooked kernel icon)
+ * - "popped"  → fully earned (random popcorn variant)
+ *
+ * Works for any points_per_kernel value — cooked kicks in at the last point
+ * before popping (i.e. pointsIntoKernel === pointsPerKernel - 1).
+ */
+export function getKernelState(
+  slotIndex: number,
+  kernelsEarned: number,
+  pointsIntoKernel: number,
+  pointsPerKernel: number,
+): KernelState {
+  if (slotIndex < kernelsEarned) return "popped"
+  if (slotIndex > kernelsEarned) return "empty"
+  // This is the kernel currently being filled
+  if (pointsIntoKernel === 0) return "empty"
+  if (pointsIntoKernel >= pointsPerKernel - 1) return "cooked"
+  return "partial"
+}
+
 const POPCORN_VARIANTS = [
   "/icons/popcorn.svg",
   "/icons/popcorn-1.svg",

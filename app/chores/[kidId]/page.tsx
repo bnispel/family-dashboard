@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { ArrowLeft, Check } from "lucide-react"
 import { supabase } from "@/lib/supabase"
-import { getWeekStart, getDayStart, getPopcornVariant } from "@/lib/chore-utils"
+import { getWeekStart, getDayStart, getPopcornVariant, getKernelState } from "@/lib/chore-utils"
 import { cn } from "@/lib/utils"
 
 // ---------------------------------------------------------------------------
@@ -287,7 +287,6 @@ export default function ChoreScreen({ params }: { params: Promise<{ kidId: strin
   const colors = getMemberColors(kid.color)
   const kernelsEarned = Math.floor(totalPoints / kid.points_per_kernel)
   const pointsIntoKernel = totalPoints % kid.points_per_kernel
-  const progressPct = (pointsIntoKernel / kid.points_per_kernel) * 100
 
   const weeklyChores = chores.filter((c) => c.reset_cadence === "weekly")
   const dailyChores = chores.filter((c) => c.reset_cadence === "daily")
@@ -398,30 +397,24 @@ export default function ChoreScreen({ params }: { params: Promise<{ kidId: strin
         <div className="flex flex-col items-center gap-5 sm:gap-8 w-full sm:w-[466px] mx-auto">
           {/* Kernel row */}
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
-            {Array.from({ length: kid.kernel_target }).map((_, i) => (
-              <div key={i} className="relative w-8 h-[34px] sm:w-[44px] sm:h-[46px] shrink-0">
-                <Image
-                  src={i < kernelsEarned ? getPopcornVariant(kidId, i) : "/icons/kernal.svg"}
-                  alt={i < kernelsEarned ? "earned" : "unearned"}
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            ))}
+            {Array.from({ length: kid.kernel_target }).map((_, i) => {
+              const state = getKernelState(i, kernelsEarned, pointsIntoKernel, kid.points_per_kernel)
+              const src =
+                state === "popped" ? getPopcornVariant(kidId, i)
+                : state === "cooked" ? "/icons/kernel-cooked.svg"
+                : "/icons/kernal.svg"
+              return (
+                <div
+                  key={i}
+                  className="relative w-8 h-[34px] sm:w-[44px] sm:h-[46px] shrink-0"
+                  style={{ opacity: state === "empty" ? 0.4 : 1 }}
+                >
+                  <Image src={src} alt={state} fill className="object-contain" />
+                </div>
+              )
+            })}
           </div>
 
-          {/* Progress bar + label */}
-          <div className="flex flex-col gap-1.5 items-center w-full">
-            <div className="w-full h-2 rounded-full bg-border overflow-hidden shadow-[0px_1px_2px_0px_rgba(0,0,0,0.04),0px_2px_8px_0px_rgba(0,0,0,0.06)]">
-              <div
-                className={cn("h-full rounded-full transition-all", colors.progressBar)}
-                style={{ width: `${progressPct}%` }}
-              />
-            </div>
-            <span className="text-body-sm text-foreground-muted">
-              {pointsIntoKernel} of {kid.points_per_kernel} points to pop a kernel
-            </span>
-          </div>
         </div>
 
         {/* Chore list */}
