@@ -5,6 +5,7 @@ import WeatherWidget from "../components/ui/weather-widget"
 import ClockWidget from "../components/ui/clock-widget"
 import { Card } from "../components/ui/card"
 import ChoreSummaryTile from "../components/ui/chore-summary-tile"
+import HeartJarWidget from "../components/ui/heart-jar-widget"
 
 type WeatherData = {
   current: {
@@ -169,6 +170,9 @@ export default function Page() {
       </Card>
       <Card className="p-0 w-full max-w-xl">
         <ChoreSummaryTile />
+      </Card>
+      <Card className="p-0 w-full max-w-xl">
+        <HeartJarWidget />
       </Card>
     </div>
   )
