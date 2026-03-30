@@ -228,7 +228,8 @@ export default function HeartJarWidget() {
       .select("*")
       .eq("date", today)
       .order("created_at")
-      .then(({ data }) => {
+      .then(({ data, error }) => {
+        if (error) { console.error("[heart-jar] load error:", error); return }
         if (!data) return
         const loaded: Heart[] = data.map((row, i) => ({
           id: row.id,
@@ -246,12 +247,14 @@ export default function HeartJarWidget() {
       .channel("heart-jar-inserts")
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "heart_jar", filter: `date=eq.${today}` },
+        { event: "INSERT", schema: "public", table: "heart_jar" },
         (payload) => {
           const row = payload.new as {
-            id: string; tx: number; ty: number; s: number; rot: number; color: string;
+            id: string; date: string; tx: number; ty: number; s: number; rot: number; color: string;
             drift_x: number; spawn_dy: number;
           }
+          // Only show hearts from today, skip our own optimistic add
+          if (row.date !== today) return
           if (heartsRef.current.find(h => h.id === row.id)) return
           const heart: Heart = {
             id: row.id, tx: row.tx, ty: row.ty, s: row.s, rot: row.rot, color: row.color,
@@ -334,6 +337,8 @@ export default function HeartJarWidget() {
       date: getDayStart(),
       tx: heart.tx, ty: heart.ty, s: heart.s, rot: heart.rot, color: heart.color,
       drift_x: heart.driftX, spawn_dy: heart.spawnDY,
+    }).then(({ error }) => {
+      if (error) console.error("[heart-jar] insert error:", error)
     })
 
     setBeating(false)
