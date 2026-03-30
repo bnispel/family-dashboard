@@ -24,6 +24,7 @@ type Kid = {
 type Chore = {
   id: string
   label: string
+  emoji: string | null
   reset_cadence: "daily" | "weekly"
   point_value: number
   sort_order: number
@@ -115,7 +116,7 @@ function ChoreRow({
           {completed && <Check className="w-6 h-6 text-white" strokeWidth={3} />}
         </div>
         <span className="text-body-base leading-body-base text-foreground">
-          {chore.label}
+          {chore.emoji && <span className="mr-2">{chore.emoji}</span>}{chore.label}
         </span>
       </div>
 
@@ -160,7 +161,7 @@ export default function ChoreScreen({ params }: { params: Promise<{ kidId: strin
       supabase.from("kids").select("*").eq("id", kidId).single(),
       supabase
         .from("chore_kid_assignments")
-        .select("chores(id, label, reset_cadence, point_value, sort_order)")
+        .select("chores(id, label, emoji, reset_cadence, point_value, sort_order)")
         .eq("kid_id", kidId),
       supabase
         .from("chore_completions")
@@ -265,50 +266,50 @@ export default function ChoreScreen({ params }: { params: Promise<{ kidId: strin
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-[1368px] mx-auto px-8 py-7 flex flex-col gap-8">
+      <div className="max-w-[1368px] mx-auto px-4 sm:px-8 py-5 sm:py-7 flex flex-col gap-6 sm:gap-8">
 
         {/* Top bar */}
-        <div className="flex items-start justify-between">
+        <div className="flex items-center justify-between gap-3">
           {/* Back button */}
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 bg-card border border-border rounded-lg px-4 py-2 text-body-base text-foreground shadow-[0px_1px_2px_0px_rgba(0,0,0,0.04),0px_2px_8px_0px_rgba(0,0,0,0.06)]"
+            className="flex items-center gap-2 bg-card border border-border rounded-lg px-3 py-2 sm:px-4 text-body-base text-foreground shadow-[0px_1px_2px_0px_rgba(0,0,0,0.04),0px_2px_8px_0px_rgba(0,0,0,0.06)] shrink-0"
           >
             <ArrowLeft className="w-5 h-5" />
-            Dashboard
+            <span className="hidden sm:inline">Dashboard</span>
           </button>
 
           {/* Kid title */}
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-3 sm:gap-5">
             <div
               className={cn(
-                "w-[76px] h-[76px] rounded-full ring-4 flex items-center justify-center text-[41px] leading-none",
+                "w-12 h-12 sm:w-[76px] sm:h-[76px] rounded-full ring-4 flex items-center justify-center text-2xl sm:text-[41px] leading-none shrink-0",
                 colors.bg100,
                 colors.avatarRing,
               )}
             >
               {kid.emoji}
             </div>
-            <span className="text-[41px] font-medium leading-[67px] tracking-[-0.41px] text-foreground">
+            <span className="text-2xl sm:text-[41px] font-medium sm:leading-[67px] sm:tracking-[-0.41px] text-foreground">
               {kid.name}'s Chores
             </span>
           </div>
 
           {/* Total points */}
-          <div className="bg-card rounded-lg px-5 py-3 flex flex-col items-center gap-2 min-w-[195px]">
-            <span className="text-body-sm font-semibold text-foreground-muted">Total Points</span>
-            <span className={cn("text-[46px] font-medium leading-[42px] tracking-[-0.46px]", colors.text500)}>
+          <div className="bg-card rounded-lg px-3 sm:px-5 py-2 sm:py-3 flex flex-col items-center gap-1 sm:gap-2 shrink-0">
+            <span className="text-xs sm:text-body-sm font-semibold text-foreground-muted whitespace-nowrap">Total Points</span>
+            <span className={cn("text-3xl sm:text-[46px] font-medium sm:leading-[42px] sm:tracking-[-0.46px]", colors.text500)}>
               {totalPoints}
             </span>
           </div>
         </div>
 
         {/* Kernel progress */}
-        <div className="flex flex-col items-center gap-8 w-[466px] mx-auto">
+        <div className="flex flex-col items-center gap-5 sm:gap-8 w-full sm:w-[466px] mx-auto">
           {/* Kernel row */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
             {Array.from({ length: kid.kernel_target }).map((_, i) => (
-              <div key={i} className="relative w-[44px] h-[46px] shrink-0">
+              <div key={i} className="relative w-8 h-[34px] sm:w-[44px] sm:h-[46px] shrink-0">
                 <Image
                   src={i < kernelsEarned ? getPopcornVariant(kidId, i) : "/icons/kernal.svg"}
                   alt={i < kernelsEarned ? "earned" : "unearned"}
@@ -338,9 +339,9 @@ export default function ChoreScreen({ params }: { params: Promise<{ kidId: strin
 
           {/* Weekly */}
           {weeklyChores.length > 0 && (
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3 sm:gap-5">
               <span className="text-body-lg font-medium leading-body-lg text-foreground">Weekly</span>
-              <div className="grid grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
                 {weeklyChores.map((chore) => (
                   <ChoreRow
                     key={chore.id}
@@ -356,9 +357,9 @@ export default function ChoreScreen({ params }: { params: Promise<{ kidId: strin
 
           {/* Daily */}
           {dailyChores.length > 0 && (
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3 sm:gap-5">
               <span className="text-body-lg font-medium leading-body-lg text-foreground">Daily</span>
-              <div className="grid grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
                 {dailyChores.map((chore) => (
                   <ChoreRow
                     key={chore.id}

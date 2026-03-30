@@ -56,7 +56,7 @@ export function ClockWidget({ className, size = "sm", isSchoolDay = false, style
     <div
       className={cn(
         "p-3 flex items-center justify-center",
-        isMd ? "flex-row gap-3 w-[452px]" : "flex-col gap-2 w-[296px]",
+        isMd ? "flex-row gap-3 w-[452px]" : "flex-col gap-2 w-full",
         className
       )}
       style={style}

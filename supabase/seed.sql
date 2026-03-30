@@ -16,34 +16,34 @@ ON CONFLICT (id) DO NOTHING;
 -- Chores
 -- ------------------------------------------------------------
 -- Weekly chores (both kids)
-INSERT INTO chores (id, label, reset_cadence, point_value, sort_order) VALUES
-  ('10000000-0000-0000-0000-000000000001', 'Clean your room',                  'weekly', 3, 10),
-  ('10000000-0000-0000-0000-000000000002', 'Put away clothes',                 'weekly', 3, 20),
-  ('10000000-0000-0000-0000-000000000003', 'Put all toys away on main floor',  'weekly', 3, 30)
+INSERT INTO chores (id, label, emoji, reset_cadence, point_value, sort_order) VALUES
+  ('10000000-0000-0000-0000-000000000001', 'Clean your room',                  '🧹', 'weekly', 3, 10),
+  ('10000000-0000-0000-0000-000000000002', 'Put away clothes',                 '👕', 'weekly', 3, 20),
+  ('10000000-0000-0000-0000-000000000003', 'Put all toys away on main floor',  '🧸', 'weekly', 3, 30)
 ON CONFLICT (id) DO NOTHING;
 
 -- Daily chores (both kids)
-INSERT INTO chores (id, label, reset_cadence, point_value, sort_order) VALUES
-  ('20000000-0000-0000-0000-000000000001', 'Plate to the sink',          'daily', 1, 10),
-  ('20000000-0000-0000-0000-000000000002', 'Clean up cabinet papers',    'daily', 1, 20),
-  ('20000000-0000-0000-0000-000000000003', 'All dirty clothes in hamper','daily', 1, 30),
-  ('20000000-0000-0000-0000-000000000004', 'Shoes by the door at night', 'daily', 1, 40),
-  ('20000000-0000-0000-0000-000000000005', 'Finish your supper',         'daily', 1, 50),
-  ('20000000-0000-0000-0000-000000000006', 'Shower / bath',              'daily', 1, 60),
-  ('20000000-0000-0000-0000-000000000007', 'Set out clothes for tomorrow','daily', 1, 70),
-  ('20000000-0000-0000-0000-000000000008', '30 min of reading',          'daily', 2, 80),
-  ('20000000-0000-0000-0000-000000000009', '30 min of exercise',         'daily', 2, 90)
+INSERT INTO chores (id, label, emoji, reset_cadence, point_value, sort_order) VALUES
+  ('20000000-0000-0000-0000-000000000001', 'Plate to the sink',           '🍽️', 'daily', 1, 10),
+  ('20000000-0000-0000-0000-000000000002', 'Clean up cabinet papers',     '📄', 'daily', 1, 20),
+  ('20000000-0000-0000-0000-000000000003', 'All dirty clothes in hamper', '🧺', 'daily', 1, 30),
+  ('20000000-0000-0000-0000-000000000004', 'Shoes by the door at night',  '👟', 'daily', 1, 40),
+  ('20000000-0000-0000-0000-000000000005', 'Finish your supper',          '🥦', 'daily', 1, 50),
+  ('20000000-0000-0000-0000-000000000006', 'Shower / bath',               '🚿', 'daily', 1, 60),
+  ('20000000-0000-0000-0000-000000000007', 'Set out clothes for tomorrow', '👔', 'daily', 1, 70),
+  ('20000000-0000-0000-0000-000000000008', '30 min of reading',           '📚', 'daily', 2, 80),
+  ('20000000-0000-0000-0000-000000000009', '30 min of exercise',          '🏃', 'daily', 2, 90)
 ON CONFLICT (id) DO NOTHING;
 
 -- Daily chores (Lincoln only)
-INSERT INTO chores (id, label, reset_cadence, point_value, sort_order) VALUES
-  ('30000000-0000-0000-0000-000000000001', 'Backpack in the closet',          'daily', 1, 100),
-  ('30000000-0000-0000-0000-000000000002', 'Clean dining room after supper',  'daily', 2, 110)
+INSERT INTO chores (id, label, emoji, reset_cadence, point_value, sort_order) VALUES
+  ('30000000-0000-0000-0000-000000000001', 'Backpack in the closet',         '🎒', 'daily', 1, 100),
+  ('30000000-0000-0000-0000-000000000002', 'Clean dining room after supper', '🫧', 'daily', 2, 110)
 ON CONFLICT (id) DO NOTHING;
 
 -- Daily chores (Emery only)
-INSERT INTO chores (id, label, reset_cadence, point_value, sort_order) VALUES
-  ('40000000-0000-0000-0000-000000000001', 'Brush teeth', 'daily', 1, 100)
+INSERT INTO chores (id, label, emoji, reset_cadence, point_value, sort_order) VALUES
+  ('40000000-0000-0000-0000-000000000001', 'Brush teeth', '🦷', 'daily', 1, 100)
 ON CONFLICT (id) DO NOTHING;
 
 -- ------------------------------------------------------------

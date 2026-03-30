@@ -79,7 +79,7 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
     <div
       className={cn(
         "p-3 flex items-center justify-center",
-        isMd ? "flex-row w-[452px]" : "flex-col w-[296px]",
+        isMd ? "flex-row w-[452px]" : "flex-col w-full",
         isDefault ? (isMd ? "gap-3" : "gap-2") : "gap-2",
         !isMd && (isLoading || isError) && "min-h-[130px]",
         className
@@ -89,11 +89,11 @@ export function WeatherWidget({ className, size = "sm", state = "default", style
       {isDefault && (
         <>
           <div className={cn("flex flex-col w-full gap-2", !isMd && "items-center")}>
-            <div className={cn("flex gap-3", isMd ? "items-center flex-1" : "items-start")}>
+            <div className={cn("flex gap-3", isMd ? "items-center flex-1" : "items-center justify-center")}>
               <div className={cn("overflow-hidden relative flex-shrink-0", iconSizeClass)}>
                 <CurrentWeatherIcon className={cn(isSunny && "sun-icon-rotating")} />
               </div>
-              <div className={cn("flex", isMd ? "flex-row items-center gap-3" : "flex-col items-start")}>
+              <div className={cn("flex", isMd ? "flex-row items-center gap-3" : "flex-col items-center")}>
                 <div className="text-[56px] font-medium text-foreground leading-heading-1 tracking-heading-1">
                   {weatherData?.current.temp}°
                 </div>

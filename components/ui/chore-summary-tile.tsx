@@ -79,7 +79,7 @@ function KidBlock({ progress }: KidBlockProps) {
       <Link
         href={`/chores/${kid.id}`}
         className={cn(
-          "relative flex flex-col items-center rounded-[16px] border-2 w-[268px] shrink-0 overflow-visible",
+          "relative flex flex-col items-center rounded-[16px] border-2 w-full sm:w-[268px] overflow-visible",
           "h-[281px] pt-14 pb-6 px-6 gap-5",
           "shadow-[0px_1px_2px_0px_rgba(0,0,0,0.04),0px_2px_8px_0px_rgba(0,0,0,0.06)]",
           solidBg,
@@ -98,7 +98,7 @@ function KidBlock({ progress }: KidBlockProps) {
         </div>
 
         {/* Popcorn explosion */}
-        <div className="relative w-[225px] h-[139px] shrink-0">
+        <div className="relative w-full max-w-[225px] h-[120px] shrink-0">
           <Image
             src={explosionSrc}
             alt="popcorn explosion"
@@ -109,8 +109,8 @@ function KidBlock({ progress }: KidBlockProps) {
 
         {/* Movie Night UNLOCKED text */}
         <div className="flex flex-col items-center gap-[2px] text-center text-white">
-          <span className="text-[22px] font-normal leading-[29px]">Movie Night</span>
-          <span className="text-[34px] font-bold leading-[36px]">UNLOCKED</span>
+          <span className="text-lg sm:text-[22px] font-normal leading-[29px]">Movie Night</span>
+          <span className="text-2xl sm:text-[34px] font-bold leading-[36px]">UNLOCKED</span>
         </div>
       </Link>
     )
@@ -123,7 +123,7 @@ function KidBlock({ progress }: KidBlockProps) {
     <Link
       href={`/chores/${kid.id}`}
       className={cn(
-        "flex flex-col items-center gap-[15px] p-6 rounded-[16px] border-2 w-[268px] shrink-0",
+        "flex flex-col items-center gap-[15px] p-6 rounded-[16px] border-2 w-full sm:w-[268px]",
         "shadow-[0px_1px_2px_0px_rgba(0,0,0,0.04),0px_2px_8px_0px_rgba(0,0,0,0.06)]",
         cardBorder,
       )}
@@ -257,7 +257,7 @@ export function ChoreSummaryTile() {
       </div>
 
       {/* Kid blocks */}
-      <div className="flex gap-5">
+      <div className="flex flex-col sm:flex-row gap-5">
         {progress.map((p) => (
           <KidBlock key={p.kid.id} progress={p} />
         ))}

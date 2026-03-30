@@ -51,8 +51,8 @@ export function getPopcornVariant(kidId: string, slotIndex: number): string {
 /** ISO Monday date string (YYYY-MM-DD) in Central time for weekly reset + aggregation */
 export function getWeekStart(date: Date = new Date()): string {
   const { year, month, day, weekday } = centralDateParts(date)
-  // ISO week starts Monday; weekday 0=Sun needs to go back 6 days
-  const daysBack = weekday === 0 ? 6 : weekday - 1
-  const monday = new Date(Date.UTC(year, month - 1, day - daysBack))
-  return toDateString(monday.getUTCFullYear(), monday.getUTCMonth() + 1, monday.getUTCDate())
+  // Week starts Sunday; weekday 0=Sun needs 0 days back, Mon=1, ..., Sat=6
+  const daysBack = weekday
+  const sunday = new Date(Date.UTC(year, month - 1, day - daysBack))
+  return toDateString(sunday.getUTCFullYear(), sunday.getUTCMonth() + 1, sunday.getUTCDate())
 }

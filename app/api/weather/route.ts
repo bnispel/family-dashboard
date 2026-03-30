@@ -9,7 +9,7 @@ export async function GET(request: Request) {
 
   try {
     const response = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,windspeed_10m&hourly=weathercode,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&windspeed_unit=ms&timezone=auto`
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,wind_speed_10m&hourly=weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&wind_speed_unit=ms&timezone=auto`
     )
 
     if (!response.ok) {
@@ -22,11 +22,11 @@ export async function GET(request: Request) {
       current: {
         temp: Math.round(data.current.temperature_2m),
         weatherCode: data.current.weather_code,
-        windSpeed: data.current.windspeed_10m,
+        windSpeed: data.current.wind_speed_10m,
       },
       hourly: {
-        weatherCodes: data.hourly.weathercode,
-        windSpeeds: data.hourly.windspeed_10m,
+        weatherCodes: data.hourly.weather_code,
+        windSpeeds: data.hourly.wind_speed_10m,
       },
       daily: {
         high: Math.round(data.daily.temperature_2m_max[0]),

@@ -155,11 +155,11 @@ export default function Page() {
   const widgetWeatherData = scenario === "live" ? weatherData : (override.weatherData ?? null)
 
   return (
-    <div style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "24px" }} data-name="Dashboard" data-node-id="15:109">
-      <Card className="p-0">
+    <div className="w-full min-h-screen flex flex-col items-center justify-center gap-6 px-4 py-8" data-name="Dashboard" data-node-id="15:109">
+      <Card className="p-0 w-full max-w-xl">
         <ClockWidget size={widgetSize} />
       </Card>
-      <Card className="p-0">
+      <Card className="p-0 w-full max-w-xl">
         <WeatherWidget
           size={widgetSize}
           state={widgetState as "default" | "loading" | "error"}
@@ -167,7 +167,7 @@ export default function Page() {
           alert={widgetAlert}
         />
       </Card>
-      <Card className="p-0">
+      <Card className="p-0 w-full max-w-xl">
         <ChoreSummaryTile />
       </Card>
     </div>
